@@ -63,7 +63,7 @@ Open `paper2_pipeline.ipynb` from the repository root and run the sections in or
 The main run can also be started from the command line:
 
 ```
-python src/paper2_run_full.py --freq data/freMTPL2freq.csv --sev data/freMTPL2sev.csv \
+python py_files/paper2_run_full.py --freq data/freMTPL2freq.csv --sev data/freMTPL2sev.csv \
     --configs tuning/selected_configs.json --out v2_full
 ```
 
