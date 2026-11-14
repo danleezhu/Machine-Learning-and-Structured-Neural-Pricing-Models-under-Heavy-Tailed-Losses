@@ -90,25 +90,6 @@ The sets are used as follows:
 - **Validation set:** tuning, early stopping and the totals of the credibility cells.
 - **Test set:** every reported number.
 
-## Where each result of the paper comes from
-
-| Paper | Produced by | File |
-|---|---|---|
-| Table 4, Figure 2 (interaction pairs) | `paper2_paper_figures.ga2m_report` | `v2_paper/tables/paper_tables_ga2m.xlsx`, `v2_paper/figures/G1_interaction_stability` |
-| Table 5 (main results) | `paper2_analysis_full.run_all(v2_full_plus995)` | `v2_full_plus995/analysis/tables/R1_main_table` |
-| Table 6 (paired differences from GBM) | `paper2_extra_tables.py` | `v2_paper/tables/paired/table_vsgbm.tex` |
-| Table 7 (Neural GA2M+ − Neural GA2M by claim location) | `paper2_extra_tables.py` | `v2_paper/tables/paired/table_groups.tex` |
-| Figures 3, 4, 5, A2 | `paper2_paper_figures.ga2m_report` | `v2_paper/figures/G4_*`, `G2_*`, `G3_*`, `G5_*` |
-| Figure 6 (calibrator by grouping) | `paper2_age_calibration.report` | `v2_age_calibration/fig1_heatmaps_k2000` |
-| Figure A1 (sensitivity to k) | `paper2_age_calibration.report` | `v2_age_calibration/fig2_k_curves_by_model` |
-| Table 8, Figures 7, A3 (calibration methods) | `paper2_paper_figures.calibration_report` | `v2_paper/tables/paper_tables_calibration.xlsx`, `v2_paper/figures/C4_*`, `C2_*` |
-| Figure 8, Table A1 (partial dependence, shape stability) | `paper2_appendix.pd_figure` | `v2_paper/figures/F10_partial_dependence`, `v2_paper/tables/A2_shape_stability` |
-| Figure 9 (categorical relativities) | `paper2_appendix.relativity_figure` | `v2_paper/figures/A1_categorical_relativities` |
-| Table A2 (signed balance) | `paper2_appendix.signed_balance_table` | `v2_paper/tables/A3_signed_balance` |
-| Table A3 (regular vs stressed splits) | `paper2_appendix.model_free_stress` | `v2_paper/tables/S1_model_free_stress` |
-| Table A4 (WMAE, WRMSE) | `perf.csv` columns `weighted_mae`, `weighted_rmse` | `v2_full_plus995/perf.csv` |
-| Figure A4 (clipped vs unclipped) | `paper2_clipping.tradeoff_figure` | `v2_clipping/clipping_tradeoff` |
-| Figure A5 (grouping chosen on validation) | `paper2_calibrator_selection.figure` | `v2_calibrator_selection/calibrator_selection` |
 
 The noise floor of the test balance comes from two places:
 
