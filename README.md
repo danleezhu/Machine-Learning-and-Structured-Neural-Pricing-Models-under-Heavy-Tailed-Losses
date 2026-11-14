@@ -21,7 +21,7 @@ The pipeline also covers:
 
 ```
 paper2_pipeline.ipynb            full pipeline, run from the repository root
-src/
+py_files/
   paper2_adjust_clean_plus.py    data preparation, Tweedie deviance, stratified split, seeding
   paper2_models.py               model definitions and fitting (GLMs, EBM, GBM, LocalGLMnet, CANN, Neural GA2M)
   paper2_tuning.py               tuning stages and smoke test
@@ -80,7 +80,7 @@ python py_files/paper2_run_full.py --freq data/freMTPL2freq.csv --sev data/freMT
 | Paper figures and tables | `paper2_paper_figures`, `paper2_appendix` | `v2_paper/` |
 | Clipping | `paper2_clipping.run` | `v2_clipping/` |
 | Grouping chosen on validation | `paper2_calibrator_selection.run` | `v2_calibrator_selection/` |
-| Paired tables | `src/paper2_extra_tables.py` | `v2_paper/tables/paired/` |
+| Paired tables | `py_files/paper2_extra_tables.py` | `v2_paper/tables/paired/` |
 
 Every step after the main run and the Neural GA2M+ fit reads stored outputs only; no model is refitted.
 
