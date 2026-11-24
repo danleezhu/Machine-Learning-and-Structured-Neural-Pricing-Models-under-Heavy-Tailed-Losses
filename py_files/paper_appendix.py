@@ -1,32 +1,4 @@
-"""
-paper2_appendix.py — appendix tables and figures. Nothing is refitted; everything is read from the stored
-outputs.
 
-  signed_balance_table   mean signed balance B on the training, validation and test sets for every model:
-                         uncalibrated, global rescaling and the proposed calibrator
-  model_free_stress      regular vs stressed splits with the model-free label (loss-imbalance score >= 0.40 or test
-                         top-1% loss share >= 0.78), without the GLM balance criterion
-  relativity_figure      relativities of every level of Region, Area, Vehicle brand and Fuel from the partial
-                         dependence of LocalGLMnet and the Tweedie GLM, median and 10-90% range over the splits
-  pd_figure              centred partial dependence of log mu for the numerical covariates, all models, and the
-                         shape-stability table
-  check_numbers          prints descriptive numbers quoted in the paper: the young / high Bonus-Malus segment and the
-                         Spearman correlation of the pair agreement with the largest training claim
-
-Inputs
-  RUN_DIR   (v2_full_plus995)  perf.csv, seeds.csv, pd_curves.csv  (merged run, 8 models)
-  MAIN_DIR  (v2_full)          ebm_pairs.json, seeds.csv
-  FIX_DIR                      ga2mplus_selection.csv, predictions/
-  PRED_DIR  (v2_predictions)   stored raw predictions of the 7 main models
-Outputs: OUT_DIR/tables/*.csv|xlsx, OUT_DIR/figures/*.pdf|png (+ captions.txt, shared with paper2_paper_figures)
-
-    import paper2_appendix as rx
-    a3  = rx.signed_balance_table(df_freq, df_sev, [PRED_DIR, f"{FIX_DIR}/predictions"], OUT_DIR)   # ~3 min
-    s1  = rx.model_free_stress(RUN_DIR, OUT_DIR)
-    rel = rx.relativity_figure(RUN_DIR, OUT_DIR, df_freq)
-    pdt = rx.pd_figure(RUN_DIR, OUT_DIR)
-    rx.check_numbers(df_freq, df_sev, MAIN_DIR, FIX_DIR)
-"""
 
 import json
 import os
