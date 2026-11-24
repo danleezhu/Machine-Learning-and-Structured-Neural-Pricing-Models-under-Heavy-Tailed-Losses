@@ -1,36 +1,4 @@
-"""
-paper2_calibration_study.py — credibility cells for ANY grouping and ANY credibility constant k, computed from the
-stored raw predictions (paper2_predictions.py; GA2M+ predictions from ga2m_plus.py). Nothing is fitted.
 
-Design (fixed before looking at the test sets)
-  Level        set on the TRAINING set: c = O_train / P_train (global rescaling, "A"). No factor is fitted to the
-               validation level.
-  Cells        the cell ratios O_l / (c P_l) are taken from the VALIDATION set; the TEST set only evaluates.
-  Groupings    GROUPINGS below: categorical variables alone and in pairs; numerical variables in pre-specified bands
-               (BANDS; Density: portfolio quintiles of log Density, no target information) alone, in pairs and crossed
-               with Region. 20 groupings.
-  k grid       K_GRID = 0, 100, 250, 500, 1000, 2000, 5000, 10000, inf (exposure units, Z_l = E_l / (E_l + k)), plus
-               "BS" = Buhlmann-Straub estimate (volume units, Z_l = V_l / (V_l + k_hat)).
-  Modes
-     raw           model output
-     A             global rescaling on the training set
-     cell_only_A   A followed by unclipped credibility cell factors f_l = 1 + Z_l (O_l / (c P_l) - 1), unseen cells 1:
-                   what the cells add beyond the training-set level
-     (the proposed calibrator, the clipped version of cell_only_A, is computed in paper2_age_calibration)
-  Test metrics balance B, |B|, predicted / observed totals (pooled bias), Tweedie deviance, Gini, and the balance
-               over the cells of the SAME grouping: misallocation sum_l |P_l - O_l| / sum_l O_l (primary; money-
-               weighted) and the exposure-weighted mean |P_l / O_l - 1| over cells with O_l > 0 (reported only).
-  Heterogeneity per (seed, model, grouping) on the validation set: Buhlmann-Straub sigma^2, tau^2, k_hat, mean Z, and
-               the permutation p-value of tau^2 = 0 (n_perm permutations).
-
-Consistency check: raw and A reproduce the main run's versions raw and train_level exactly: consistency_check().
-
-    import paper2_calibration_study as cs
-    cs.run_study(df_freq, df_sev, pred_dirs=["v2_predictions", "v2_ga2mplus_c995_meanrank/predictions"],
-                 out_dir="v2_calibration")
-    cs.consistency_check("v2_calibration", "v2_full")
-    cs.report("v2_calibration")
-"""
 
 import json
 import os
