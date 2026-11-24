@@ -1,24 +1,3 @@
-"""
-paper2_analysis_full.py — tables and figures R1-R11 from the files written by paper2_run_full.py.
-Needs numpy, pandas, scipy, matplotlib only (no model is loaded or re-fitted).
-
-    import paper2_analysis_full as pa
-    out = pa.run_all("v2_full", group="paper")      # displays everything, writes v2_full/analysis/{tables,figures}
-
-R1  main performance table (raw and training-level corrected)
-R2  paired significance tests over seeds (Nadeau-Bengio corrected, bootstrap, Wilcoxon, Holm), all / regular / stressed
-R3  balance noise floor (covariate-free constant predictors) and level diagnostics
-R4  global rescaling (A) vs raw: mean |B|, deviance, Gini and harm rates
-R5  regular vs stressed splits
-R7  signed balance on train / validation / test
-R9  complementarity: blends of two models
-R10 stability of the fitted shapes across splits (partial dependence)
-R11 test balance explained by the allocation of losses to the split; training diagnostics
-
-Seed groups (paper2_datasets.stress_labels): group="paper" uses the fixed list of 21 stressed seeds; group="model_free"
-uses only split statistics (loss-imbalance score >= 0.40 or test top-1% loss share >= 0.78), so no model enters the
-label; group="relative" uses the same statistics, data-relative (the 40% of the run's seeds ranked highest on either).
-"""
 
 import json
 import os
