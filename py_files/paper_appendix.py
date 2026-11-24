@@ -8,9 +8,9 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-import paper2_calibration_study as cs
-import paper2_paper_figures as pf
-import paper2_predictions as pp
+import paper_calibration_study as cs
+import paper_paper_figures as pf
+import paper_predictions as pp
 
 MODELS = pf.MODELS
 MODEL_LABEL = pf.MODEL_LABEL
@@ -24,7 +24,7 @@ MODEL_COLOR = {"GLM": "#5f5e5a", "Tweedie GLM": "#8a8985", "EBM": "#1baf7a", "GB
 MODEL_STYLE = {"GLM": "--", "Tweedie GLM": ":", "EBM": "-", "GBM": "-", "LocalGLMnet": "-", "Neural GA2M": "-",
                "Neural GA2M+": "-", "Tweedie-CANN": "-."}
 
-# The three calibration methods (same names as paper2_paper_figures.METHOD_NAMES)
+# The three calibration methods (same names as paper_paper_figures.METHOD_NAMES)
 M_RAW = "Uncalibrated"
 M_A = "Global rescaling"
 M_NEW = "Global rescaling + credibility cells (Driver age × Bonus–Malus)"
@@ -258,7 +258,7 @@ def relativity_figure(run_dir, out_dir="v2_paper", df_freq=None, models=("Tweedi
 # =============================================================================================================
 def shape_stability(pdc):
     """SD across splits of the centred partial dependence, averaged over grid points / levels, per model and feature
-    (same definition as R10 of paper2_analysis_full)."""
+    (same definition as R10 of paper_analysis_full)."""
     d = _centred(pdc)
     sd = d.groupby(["method", "feature", "x"]).c.std().groupby(["method", "feature"]).mean()
     w = sd.unstack("feature")
@@ -274,7 +274,7 @@ def pd_figure(run_dir, out_dir="v2_paper", features=NUM_FEATURES, models=MODELS,
     """
     One panel per numerical covariate: median over the splits of the centred partial dependence of log mu for every
     model; 10-90% band for `band_models` only (the complete grid with all bands is R10_shape_stability of
-    paper2_analysis_full). Also writes the shape-stability table (A2_shape_stability).
+    paper_analysis_full). Also writes the shape-stability table (A2_shape_stability).
     """
     plt = pf._plt()
     pdc = pd.read_csv(os.path.join(run_dir, "pd_curves.csv"))
