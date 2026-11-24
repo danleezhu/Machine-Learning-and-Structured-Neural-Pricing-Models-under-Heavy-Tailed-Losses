@@ -5,10 +5,10 @@ import time
 import numpy as np
 import pandas as pd
 
-import paper2_calibration_study as cs
-import paper2_predictions as pp
-import paper2_run_full as rf
-from paper2_age_calibration import MODELS, VARIANT_GROUPINGS, COL_LABEL, MODEL_LABEL, TARGET, EXPOSURE, _deviance
+import paper_calibration_study as cs
+import paper_predictions as pp
+import paper_run_full as rf
+from paper_age_calibration import MODELS, VARIANT_GROUPINGS, COL_LABEL, MODEL_LABEL, TARGET, EXPOSURE, _deviance
 
 K = 2000
 LOW, HIGH = 0.95, 1.15
