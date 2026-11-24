@@ -8,7 +8,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from scipy import stats
 
-import paper2_datasets as dsm
+import paper_datasets as dsm
 
 MODEL_ORDER = ["GLM", "Tweedie GLM", "EBM", "GBM", "LocalGLMnet", "Neural GA2M", "Neural GA2M+", "Tweedie-CANN"]
 VERSIONS = ["raw", "train_level"]
