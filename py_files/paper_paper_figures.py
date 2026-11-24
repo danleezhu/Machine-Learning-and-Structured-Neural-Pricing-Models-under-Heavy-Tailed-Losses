@@ -1,5 +1,5 @@
 """
-paper2_paper_figures.py — publication figures and tables.
+paper_paper_figures.py — publication figures and tables.
 
 Part G  Neural GA2M+ : stability of the selected interaction pairs, pricing of the extreme-claim policies, test balance
                        and Gini of all models
@@ -13,7 +13,7 @@ Inputs (nothing is refitted):
   AGE_DIR (v2_age_calibration) paper_cells_on_A.csv
 Outputs: OUT_DIR/figures/*.pdf|png, OUT_DIR/figures/captions.txt, OUT_DIR/tables/*.xlsx
 
-    import paper2_paper_figures as pf
+    import paper_paper_figures as pf
     pol = pf.policy_pass(df_freq, df_sev, [PRED_DIR, f"{FIX_DIR}/predictions"], OUT_DIR)      # a few minutes
     tg = pf.ga2m_report(RUN_DIR, FIX_DIR, CAL_DIR, OUT_DIR)
     tc = pf.calibration_report(CAL_DIR, AGE_DIR, OUT_DIR)
@@ -38,8 +38,8 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-import paper2_calibration_study as cs
-import paper2_predictions as pp
+import paper_calibration_study as cs
+import paper_predictions as pp
 
 MODELS = ["GLM", "Tweedie GLM", "EBM", "GBM", "LocalGLMnet", "Neural GA2M", "Neural GA2M+", "Tweedie-CANN"]
 MODEL_LABEL = {"GLM": "GLM", "Tweedie GLM": "Tweedie GLM", "EBM": "EBM", "GBM": "GBM", "LocalGLMnet": "LocalGLMnet",
