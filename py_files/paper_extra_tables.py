@@ -1,5 +1,5 @@
 """
-paper2_extra_tables.py — paired-comparison tables with bootstrap confidence intervals.
+paper_extra_tables.py — paired-comparison tables with bootstrap confidence intervals.
 
 Table "vsref": every model except Neural GA2M+ minus the reference model GBM, after global rescaling.
     For each model and metric: mean difference, 95% bootstrap CI over the 50 splits, share of splits in which the
@@ -14,12 +14,12 @@ Table "groups": Neural GA2M+ minus Neural GA2M by claim-location group (where th
 
 Inputs
     --perf   perf.csv of the merged run with Neural GA2M+ (v2_full_plus995/perf.csv)
-    --dev    policy_pass_deviance.csv (paper2_paper_figures.policy_pass; seed x model: deviance, extreme_part,
+    --dev    policy_pass_deviance.csv (paper_paper_figures.policy_pass; seed x model: deviance, extreme_part,
              deviance_without_extremes; before rescaling)
     --seeds  policy_pass_seeds.csv (seed, C1_in, C2_in, C3_in: set holding the 1st, 2nd and 3rd largest claim)
 
 Usage
-    python src/paper2_extra_tables.py --perf v2_full_plus995/perf.csv --dev v2_paper/tables/policy_pass_deviance.csv \
+    python src/paper_extra_tables.py --perf v2_full_plus995/perf.csv --dev v2_paper/tables/policy_pass_deviance.csv \
         --seeds v2_paper/tables/policy_pass_seeds.csv --out v2_paper/tables/paired
 """
 import argparse
