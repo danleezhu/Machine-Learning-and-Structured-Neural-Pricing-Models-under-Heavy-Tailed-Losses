@@ -1,41 +1,3 @@
-"""
-ga2m_plus.py — Neural GA2M+: the Neural GA2M architecture with interaction pairs screened on a capped target over
-half-samples of the training set.
-
-Screening (training set only; the validation and test sets are not used)
-  1. cap = q-quantile of the positive policy claim amounts of the training set (q = 0.995);
-     y_q = min(ClaimAmount, cap) / Exposure (capped pure premium, exposure weights).
-  2. Main-effects EBM on y_q (Tweedie(p) objective, learning_rate / max_rounds of the selected EBM configuration,
-     no interactions); init score = log of its fitted means.
-  3. Complementary-pairs subsampling (Shah & Samworth 2013): n_splits = 10 random halvings of the training set,
-     stratified by claim indicator x claim-size class, both halves used -> 20 subsamples. On each subsample the FAST
-     strength of every pair is measured on the residuals of the main-effects fit; the ranking on the full training set
-     is recorded as well.
-  4. Selection rule (fixed_cap_sets):
-       "meanrank" : the k_top = 10 pairs with the best mean rank over the 20 half-samples (the rule of the paper);
-       "pi"       : stability selection, pairs with selection frequency pi >= pi_threshold.
-  The Neural GA2M (selected configuration, all n_bag members, same model seed as the Neural GA2M of the main run) is
-  then fitted on the selected pairs and evaluated exactly as in paper2_run_full.
-
-Paper pipeline (fixed cap 0.995)
-    import ga2m_plus as gp
-    gp.screen_fixed_cap(df_freq, df_sev, range(41, 91), "v2_ga2mplus_screen995", CONFIGS, cap=0.995)
-    rr = gp.rule_report("v2_full", "v2_ga2mplus_screen995", 0.995)          # training data only
-    gp.run_fixed_cap(df_freq, df_sev, range(41, 91), "v2_ga2mplus_screen995", "v2_ga2mplus_c995_meanrank",
-                     CONFIGS, cap=0.995, rule="meanrank")
-    gp.structure_stability("v2_full", "v2_ga2mplus_c995_meanrank")
-    gp.merge_results("v2_full", "v2_ga2mplus_c995_meanrank", "v2_full_plus995")   # then paper2_analysis_full.run_all
-
-Variant with the cap chosen on the validation set (run_ga2m_plus): screening at caps 0.995 and 0.999, member 0 of the
-ensemble fitted for every distinct pair set, the cap with the lower validation deviance kept, remaining members fitted
-for that set only. run_screening_ablation / ablation_report repeat the screening on the uncapped target to separate the
-effect of the cap from that of the half-sample ranking.
-
-Files (out_dir): perf.csv, calibration.csv, pd_curves.csv, nn_history.jsonl (same formats as the main run),
-ga2mplus_selection.csv (one row per seed), ga2mplus_frequencies.csv (seed x cap x pair: pi, mean half-sample rank,
-full-sample strength and rank), seeds_complete.csv, predictions/Neural_GA2M+/seed<s>.npz. Settings are stored in
-ga2mplus_settings.json; a resumed run with different settings is refused.
-"""
 
 import itertools
 import json
@@ -47,10 +9,10 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-import paper2_adjust_clean_plus as p2
-import paper2_datasets as dsm
-import paper2_models as pm
-import paper2_run_full as rf
+import paper_adjust_clean_plus as p2
+import paper_datasets as dsm
+import paper_models as pm
+import paper_run_full as rf
 
 METHOD = "Neural GA2M+"
 DEFAULT_SETTINGS = dict(caps=[0.995, 0.999], k_top=10, pi_threshold=0.6, n_splits=10)
@@ -192,7 +154,7 @@ def screen_pairs(train_df, num_cols, cat_cols, power, ebm_cfg, cap_q, k_top, pi_
 
 
 # =============================================================================================================
-# Neural GA2M members (same construction as paper2_models.NeuralGA2MWrapper.fit, member by member)
+# Neural GA2M members (same construction as paper_models.NeuralGA2MWrapper.fit, member by member)
 # =============================================================================================================
 def _fit_members(model, train_df, valid_df, bags):
     """
@@ -261,7 +223,7 @@ def run_ga2m_plus(df_freq, df_sev, seeds, out_dir, configs_path, caps=None, k_to
     not depend on it; 1 = sequential.
     save_predictions: raw validation and test predictions (float32), the training sum of exposure x prediction and
     hashes of the split are written to out_dir/predictions/Neural_GA2M+/seed<s>.npz (same layout as
-    paper2_predictions.py), so the calibration studies need no refit."""
+    paper_predictions.py), so the calibration studies need no refit."""
     power = _power() if power is None else power
     configs = rf.load_configs(configs_path)
     settings = dict(DEFAULT_SETTINGS)
@@ -387,9 +349,9 @@ def prediction_path(out_dir, method, seed):
 
 
 def save_prediction_file(out_dir, method, seed, raw, sets):
-    """Same format as paper2_predictions.save_file: valid / test predictions (float32), the training sum of
+    """Same format as paper_predictions.save_file: valid / test predictions (float32), the training sum of
     exposure x prediction, SHA-1 of the IDpol of every set (no policy ids, no training predictions)."""
-    import paper2_predictions as pp
+    import paper_predictions as pp
     pp.save_file(prediction_path(out_dir, method, seed), raw, sets)
 
 
@@ -787,7 +749,7 @@ def run_screening_ablation(df_freq, df_sev, seeds, out_dir, configs_path, k_top=
 # Summaries, merge, structure stability
 # =============================================================================================================
 def merge_results(main_dir, plus_dir, out_dir):
-    """Writes a directory that paper2_analysis_full.run_all can read: main-run files + GA2M+ rows. Only seeds that
+    """Writes a directory that paper_analysis_full.run_all can read: main-run files + GA2M+ rows. Only seeds that
     are complete in BOTH runs are kept (seeds_complete.csv = intersection)."""
     os.makedirs(out_dir, exist_ok=True)
     j = os.path.join
