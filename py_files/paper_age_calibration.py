@@ -1,22 +1,4 @@
-"""
-paper2_age_calibration.py — the proposed calibrator (clipped credibility cells after global rescaling) for every
-cell grouping, model and credibility constant k, with its tables and figures.
 
-Uses only stored outputs (nothing is refitted):
-  * the calibration study (paper2_calibration_study; v2_calibration/results.csv, heterogeneity.csv): unclipped cell
-    factors on top of correction A ("cell_only_A") for every grouping and k, and the validation heterogeneity tests;
-  * the stored raw predictions (v2_predictions/, <GA2M+ dir>/predictions/) for the proposed calibrator, the clipped
-    cell factor applied on top of correction A (global rescaling on the training set):
-        f_i = clip(1 + Z_i ((O_i + 1) / (c P_i + 1) - 1), 0.95, 1.15),  Z_i = E_i / (E_i + k),  unseen cells f = 1,
-        prediction = c * mu * f_cell,   c = training-level factor of correction A,
-    with O_i, P_i, E_i the observed loss, raw predicted loss and exposure of cell i on the VALIDATION set.
-    Fitted on the validation set, evaluated on the test set (as everything in the study).
-
-    import paper2_age_calibration as ac
-    var = ac.compute_variants(df_freq, df_sev, ["v2_predictions", "v2_ga2mplus_c995_meanrank/predictions"],
-                              "v2_age_calibration")
-    out = ac.report("v2_calibration", "v2_age_calibration")
-"""
 
 import os
 import time
