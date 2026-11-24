@@ -8,10 +8,10 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-import paper2_adjust_clean_plus as p2
-import paper2_models as pm
-import paper2_predictions as pp
-import paper2_run_full as rf
+import paper_adjust_clean_plus as p2
+import paper_models as pm
+import paper_predictions as pp
+import paper_run_full as rf
 
 K_GRID = [0.0, 100.0, 250.0, 500.0, 1000.0, 2000.0, 5000.0, 10000.0, np.inf]
 MODES = ["raw", "A", "cell_only_A"]
@@ -76,7 +76,7 @@ def _tweedie_dev(y, mu, e, power):
 def _segment_metrics(ids, y, mu, e, n):
     """seg_misalloc = sum_l |P_l - O_l| / sum_l O_l: share of the observed loss that is mis-allocated across the cells
     of the grouping (money-weighted, robust to tiny cells; includes the overall imbalance). seg_absB = exposure-
-    weighted mean of |P_l / O_l - 1| over cells with O_l > 0 (as paper2_run_full.segment_abs_balance; explodes for
+    weighted mean of |P_l / O_l - 1| over cells with O_l > 0 (as paper_run_full.segment_abs_balance; explodes for
     fine groupings with small cells, so it is reported but not used for conclusions)."""
     o = np.bincount(ids, weights=e * y, minlength=n)
     p = np.bincount(ids, weights=e * mu, minlength=n)
