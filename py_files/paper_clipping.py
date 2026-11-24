@@ -1,5 +1,5 @@
 """
-paper2_clipping.py — clipped versus unclipped credibility cells, and the sensitivity to the clipping bounds.
+paper_clipping.py — clipped versus unclipped credibility cells, and the sensitivity to the clipping bounds.
 
 The proposed calibrator is
     mu_cal = c * mu * clip(1 + Z ((O + 1) / (c P + 1) - 1), LOW, HIGH),   Z = E / (E + k),
@@ -14,7 +14,7 @@ What this module computes, from the stored predictions only (no refit), for ever
     R = 5 times; factors are estimated on one half and the change of deviance relative to global rescaling is
     measured on the other half (10 fits). Bounds chosen this way use no test data.
 
-    import paper2_clipping as clp
+    import paper_clipping as clp
     res = clp.run(df_freq, df_sev, [PRED_DIR, f"{FIX_DIR}/predictions"], out_dir="v2_clipping")   # ~20-30 min
     tabs = clp.summary(res, out_dir="v2_clipping")
     clp.tradeoff_figure(res, out_dir="v2_clipping", paper_dir="v2_paper")   # clipped vs unclipped
@@ -26,10 +26,10 @@ import time
 import numpy as np
 import pandas as pd
 
-import paper2_calibration_study as cs
-import paper2_predictions as pp
-import paper2_run_full as rf
-from paper2_age_calibration import MODELS, MODEL_LABEL, TARGET, EXPOSURE, _deviance
+import paper_calibration_study as cs
+import paper_predictions as pp
+import paper_run_full as rf
+from paper_age_calibration import MODELS, MODEL_LABEL, TARGET, EXPOSURE, _deviance
 
 GROUPING = "DrivAge x BonusMalus"
 K_PAPER = 2000
@@ -185,7 +185,7 @@ def _save(fig, out_dir, name):
 
 
 def _location_groups(paper_dir):
-    import paper2_paper_figures as pf
+    import paper_paper_figures as pf
     sd = pf.load_policy_pass(paper_dir)["seeds"].set_index("seed")
     return sd.apply(pf._location_group, axis=1), pf.GROUP_ORDER, pf.GROUP_TICK
 
