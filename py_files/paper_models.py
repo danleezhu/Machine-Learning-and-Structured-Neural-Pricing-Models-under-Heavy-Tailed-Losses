@@ -1,15 +1,15 @@
 """
-paper2_models.py — model definitions and fitting (used by paper2_tuning.py, paper2_run_full.py and ga2m_plus.py).
+paper_models.py — model definitions and fitting (used by paper_tuning.py, paper_run_full.py and ga2m_plus.py).
 
 Every tunable setting is passed EXPLICITLY through a configuration dictionary; a missing key raises an error instead
 of falling back to a hidden default. Constants that are not tuned are listed below with their source.
 
 Data
-    prepare_data(): paper2_adjust_clean_plus.prepare_fremtpl2 + Density replaced by log(Density) for ALL models.
+    prepare_data(): paper_adjust_clean_plus.prepare_fremtpl2 + Density replaced by log(Density) for ALL models.
     The split (make_train_valid_test_stratified) depends only on ClaimAmount and Region, so it is unchanged.
 
 Models
-    GLM, Tweedie GLM          paper2_adjust_clean_plus (no hyper-parameters)
+    GLM, Tweedie GLM          paper_adjust_clean_plus (no hyper-parameters)
     EBM                       EBMWrapperV2: Tweedie(p) objective, interactions = 10, random_state = 42;
                               learning_rate / max_rounds from the configuration (None = installed interpret default);
                               every other argument = interpret default (outer bagging, internal validation split)
@@ -43,7 +43,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import statsmodels.api as sm
 
-import paper2_adjust_clean_plus as p2
+import paper_adjust_clean_plus as p2
 
 TARGET, EXPOSURE = "PurePremium", "Exposure"
 NN_MODELS = ["LocalGLMnet", "Neural GA2M", "Tweedie-CANN"]
