@@ -1,7 +1,7 @@
 """
-paper2_predictions.py — refits the models of the 50-seed run and KEEPS their raw predictions, so that any calibration
+paper_predictions.py — refits the models of the 50-seed run and KEEPS their raw predictions, so that any calibration
 study (other cells, numerical bands, other credibility constants k, other clip bands) can be computed afterwards
-without fitting anything again (paper2_calibration_study.py).
+without fitting anything again (paper_calibration_study.py).
 
 Reproduction of the main run
     Same data preparation, same split (seed), same configurations (tuning/selected_configs.json, checked against
@@ -22,7 +22,7 @@ Files (out_dir)
     not storing policy ids and training predictions. A lossy float16 / log-quantised store would break the exact
     reproduction of the main run (relative errors of about 1e-3) and is not used.
 
-    import paper2_predictions as pp
+    import paper_predictions as pp
     pp.archive_predictions(df_freq, df_sev, seeds=range(41, 91), out_dir="v2_predictions", main_dir="v2_full",
                            configs_path="tuning/selected_configs.json")
     d = pp.load_predictions(["v2_predictions", "v2_ga2mplus_c995_meanrank/predictions"], "EBM", 49)
@@ -36,10 +36,10 @@ import time
 import numpy as np
 import pandas as pd
 
-import paper2_adjust_clean_plus as p2
-import paper2_datasets as dsm
-import paper2_models as pm
-import paper2_run_full as rf
+import paper_adjust_clean_plus as p2
+import paper_datasets as dsm
+import paper_models as pm
+import paper_run_full as rf
 
 MODELS = ["GLM", "Tweedie GLM", "EBM", "GBM", "LocalGLMnet", "Neural GA2M", "Tweedie-CANN"]
 SETS = ("train", "valid", "test")
