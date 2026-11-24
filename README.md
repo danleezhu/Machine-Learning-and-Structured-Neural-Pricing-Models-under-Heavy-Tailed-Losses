@@ -20,23 +20,23 @@ The pipeline also covers:
 ## Repository layout
 
 ```
-paper2_pipeline.ipynb            full pipeline, run from the repository root
+paper_pipeline.ipynb            full pipeline, run from the repository root
 py_files/
-  paper2_adjust_clean_plus.py    data preparation, Tweedie deviance, stratified split, seeding
-  paper2_models.py               model definitions and fitting (GLMs, EBM, GBM, LocalGLMnet, CANN, Neural GA2M)
-  paper2_tuning.py               tuning stages and smoke test
-  paper2_predictions.py          storage and loading of raw predictions
-  paper2_datasets.py             data-set settings, split, stressed-seed labels, Tweedie power
-  paper2_run_full.py             50-split run of the seven main models (also a command-line script)
-  paper2_analysis_full.py        tables and figures R1–R11 of a run directory
+  paper_adjust_clean_plus.py    data preparation, Tweedie deviance, stratified split, seeding
+  paper_models.py               model definitions and fitting (GLMs, EBM, GBM, LocalGLMnet, CANN, Neural GA2M)
+  paper_tuning.py               tuning stages and smoke test
+  paper_predictions.py          storage and loading of raw predictions
+  paper_datasets.py             data-set settings, split, stressed-seed labels, Tweedie power
+  paper_run_full.py             50-split run of the seven main models (also a command-line script)
+  paper_analysis_full.py        tables and figures R1–R11 of a run directory
   ga2m_plus.py                   Neural GA2M+: pair screening on the capped target, fit, structure stability
-  paper2_calibration_study.py    credibility cells for 20 groupings and a grid of k (unclipped), heterogeneity tests
-  paper2_age_calibration.py      proposed calibrator (clipped cells after global rescaling) by grouping and k
-  paper2_paper_figures.py        figures and tables of the Neural GA2M+ and calibration sections
-  paper2_appendix.py             appendix tables and figures (signed balance, stress label, partial dependence)
-  paper2_clipping.py             clipped vs unclipped cells, sensitivity to the clipping bounds
-  paper2_calibrator_selection.py grouping of the calibrator chosen on the validation set by cross-fitting
-  paper2_extra_tables.py         paired comparisons with bootstrap confidence intervals (command-line script)
+  paper_calibration_study.py    credibility cells for 20 groupings and a grid of k (unclipped), heterogeneity tests
+  paper_age_calibration.py      proposed calibrator (clipped cells after global rescaling) by grouping and k
+  paper_paper_figures.py        figures and tables of the Neural GA2M+ and calibration sections
+  paper_appendix.py             appendix tables and figures (signed balance, stress label, partial dependence)
+  paper_clipping.py             clipped vs unclipped cells, sensitivity to the clipping bounds
+  paper_calibrator_selection.py grouping of the calibrator chosen on the validation set by cross-fitting
+  paper_extra_tables.py         paired comparisons with bootstrap confidence intervals (command-line script)
 data/                            freMTPL2freq.csv, freMTPL2sev.csv (not tracked)
 tuning/                          selected_configs.json and tuning results (written by the tuning stages)
 ```
@@ -55,7 +55,7 @@ pip install -r requirements.txt
 
 ## Running
 
-Open `paper2_pipeline.ipynb` from the repository root and run the sections in order. Each long section is resumable:
+Open `paper_pipeline.ipynb` from the repository root and run the sections in order. Each long section is resumable:
 
 - finished seeds are read from disk and skipped;
 - a run directory started with other settings or another Tweedie power is refused.
@@ -63,24 +63,24 @@ Open `paper2_pipeline.ipynb` from the repository root and run the sections in or
 The main run can also be started from the command line:
 
 ```
-python py_files/paper2_run_full.py --freq data/freMTPL2freq.csv --sev data/freMTPL2sev.csv \
+python py_files/paper_run_full.py --freq data/freMTPL2freq.csv --sev data/freMTPL2sev.csv \
     --configs tuning/selected_configs.json --out v2_full
 ```
 
 | Step | Function | Output directory |
 |---|---|---|
-| Tuning (stages E, G, 1, 1b, 2, 2c, 3) | `paper2_tuning.run_tuning` | `tuning/` |
-| Main run, 7 models × 50 splits | `paper2_run_full.run_full` | `v2_full/` |
+| Tuning (stages E, G, 1, 1b, 2, 2c, 3) | `paper_tuning.run_tuning` | `tuning/` |
+| Main run, 7 models × 50 splits | `paper_run_full.run_full` | `v2_full/` |
 | Neural GA2M+ screening, cap 0.995 | `ga2m_plus.screen_fixed_cap` | `v2_ga2mplus_screen995/` |
 | Neural GA2M+ fit | `ga2m_plus.run_fixed_cap` | `v2_ga2mplus_c995_meanrank/` |
 | Merge of the two runs | `ga2m_plus.merge_results` | `v2_full_plus995/` |
-| Raw predictions of the main models | `paper2_predictions.archive_predictions` | `v2_predictions/` |
-| Calibration study | `paper2_calibration_study.run_study` | `v2_calibration/` |
-| Proposed calibrator | `paper2_age_calibration.compute_variants` | `v2_age_calibration/` |
-| Paper figures and tables | `paper2_paper_figures`, `paper2_appendix` | `v2_paper/` |
-| Clipping | `paper2_clipping.run` | `v2_clipping/` |
-| Grouping chosen on validation | `paper2_calibrator_selection.run` | `v2_calibrator_selection/` |
-| Paired tables | `py_files/paper2_extra_tables.py` | `v2_paper/tables/paired/` |
+| Raw predictions of the main models | `paper_predictions.archive_predictions` | `v2_predictions/` |
+| Calibration study | `paper_calibration_study.run_study` | `v2_calibration/` |
+| Proposed calibrator | `paper_age_calibration.compute_variants` | `v2_age_calibration/` |
+| Paper figures and tables | `paper_paper_figures`, `paper_appendix` | `v2_paper/` |
+| Clipping | `paper_clipping.run` | `v2_clipping/` |
+| Grouping chosen on validation | `paper_calibrator_selection.run` | `v2_calibrator_selection/` |
+| Paired tables | `py_files/paper_extra_tables.py` | `v2_paper/tables/paired/` |
 
 Every step after the main run and the Neural GA2M+ fit reads stored outputs only; no model is refitted.
 
@@ -94,9 +94,9 @@ The sets are used as follows:
 The noise floor of the test balance comes from two places:
 
 - the `noise floor` sheet of `paper_tables_calibration.xlsx`;
-- R3 of `paper2_analysis_full`.
+- R3 of `paper_analysis_full`.
 
-The cell exposures of the calibrator come from `paper2_age_calibration.cell_diagnostics`.
+The cell exposures of the calibrator come from `paper_age_calibration.cell_diagnostics`.
 
 ## Statistical comparisons
 
