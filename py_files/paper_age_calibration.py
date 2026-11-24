@@ -6,9 +6,9 @@ import time
 import numpy as np
 import pandas as pd
 
-import paper2_calibration_study as cs
-import paper2_predictions as pp
-import paper2_run_full as rf
+import paper_calibration_study as cs
+import paper_predictions as pp
+import paper_run_full as rf
 
 MODELS = ["GLM", "Tweedie GLM", "EBM", "GBM", "LocalGLMnet", "Neural GA2M", "Neural GA2M+", "Tweedie-CANN"]
 AGE_GROUPINGS = ["DrivAge band", "DrivAge x BonusMalus", "BonusMalus x VehAge",
@@ -27,7 +27,7 @@ VARIANT_FILE = "paper_cells_on_A.csv"
 
 
 def _deviance(y, mu, e, p):
-    """Exposure-weighted mean Tweedie deviance (= paper2_adjust_clean_plus.tweedie_deviance)."""
+    """Exposure-weighted mean Tweedie deviance (= paper_adjust_clean_plus.tweedie_deviance)."""
     mu = np.maximum(mu, 1e-10)
     d = 2 * (np.where(y > 0, y ** (2 - p), 0.0) / ((1 - p) * (2 - p)) - y * mu ** (1 - p) / (1 - p)
              + mu ** (2 - p) / (2 - p))
