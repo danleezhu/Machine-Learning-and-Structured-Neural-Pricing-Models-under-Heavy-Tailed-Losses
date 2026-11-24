@@ -1,27 +1,4 @@
-"""
-paper2_calibrator_selection.py — choose the credibility-cell grouping of the calibrator for each model WITHOUT the test set.
 
-Why. Choosing a grouping per model from the test-set heatmap (paper2_age_calibration.figure1) is selection on the
-test set, and the reported test gain of the chosen grouping is then optimistic. This module chooses the grouping inside
-each split from the validation set only, by cross-fitting, and evaluates the chosen calibrator once on the test set.
-
-Rule (fixed before looking at any test result)
-  candidates  : "none" (global rescaling only) and the six groupings of VARIANT_GROUPINGS
-  calibrator  : the proposed calibrator, c * mu * clip(1 + Z ((O+1)/(cP+1) - 1), 0.95, 1.15), Z = E/(E+k), k = 2000
-  selection   : for each split and model, the validation set is halved at random R = 5 times (10 fits); cell factors
-                are estimated on one half and the change in Tweedie deviance relative to global rescaling is measured
-                on the other half. The grouping with the lowest mean change is chosen; if no grouping lowers the
-                validation deviance, no cells are used ("none").
-  final fit   : the chosen grouping's factors are re-estimated on the whole validation set and applied to the test set.
-The halvings are the same for all models and groupings of a split, so candidates are compared on the same data.
-
-Inputs: the stored raw predictions (pp.load_predictions) and the data; no model is refitted.
-
-    import paper2_calibrator_selection as sel
-    res = sel.run(df_freq, df_sev, [PRED_DIR, f"{FIX_DIR}/predictions"], out_dir="v2_calibrator_selection")
-    tabs = sel.summary(res, out_dir="v2_calibrator_selection")
-    sel.figure(res, out_dir="v2_calibrator_selection")
-"""
 import os
 import time
 
