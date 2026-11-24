@@ -1,5 +1,5 @@
 """
-paper2_tuning.py — validation-only hyper-parameter selection before the 50-seed run.
+paper_tuning.py — validation-only hyper-parameter selection before the 50-seed run.
 
 The TEST set is never used: for every seed the split is made, the test part is discarded immediately.
 
@@ -31,7 +31,7 @@ are needed again, e.g. by a later stage):
 Patience is tied to the stopping criterion: LocalGLMnet and CANN use 8 epochs for 'raw' and 'level' and 15 for 'ma'
 (a moving average needs a longer window); Neural GA2M uses 15 for every criterion (slow, flat validation curves).
 
-    import paper2_tuning as tu
+    import paper_tuning as tu
     tu.smoke_test(df_freq, df_sev)                    # every code path on a subsample; must PASS
     tu.run_tuning(df_freq, df_sev, out_dir="tuning")  # all stages; resumable; writes tuning/selected_configs.json
 """
