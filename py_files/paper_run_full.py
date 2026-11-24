@@ -1,28 +1,4 @@
-"""
-paper2_run_full.py — the 50-seed run of all models (lean storage, resumable).
 
-Inputs
-    configs_path  JSON with the configuration of EBM, GBM, LocalGLMnet, Neural GA2M and Tweedie-CANN
-                  (tuning/selected_configs.json written by paper2_tuning.py). Required: there are no built-in defaults.
-                  The configuration is copied to out_dir/configs_used.json; a resumed run with a different configuration
-                  is refused, so results of different settings can never be mixed.
-Data       paper2_datasets (freMTPL2, log(Density) for all models, stratified 60 / 20 / 20 split per seed).
-Models     GLM, Tweedie GLM, EBM, GBM, LocalGLMnet, Neural GA2M (EBM pairs of the same split), Tweedie-CANN.
-
-Versions (one row per seed x model x version in perf.csv; metrics on the TEST set)
-    raw                model output
-    train_level        A: one factor c = O_train / P_train (training set); training balance exact; Gini unchanged
-    No other calibrated version is computed here: the credibility cells are applied afterwards from the stored
-    predictions (paper2_age_calibration), and nothing is fitted to the validation level.
-
-Files in out_dir (all small; predictions are NOT kept)
-    perf.csv, calibration.csv, seeds.csv, blends.csv, pd_curves.csv, ebm_pairs.json, nn_history.jsonl,
-    seeds_complete.csv, configs_used.json; _tmp/seed<s>/ holds float32 validation/test raw predictions of the
-    CURRENT seed only (for the blends) and is deleted when the seed is complete.
-
-    python src/paper2_run_full.py --freq data/freMTPL2freq.csv --sev data/freMTPL2sev.csv \
-                --configs tuning/selected_configs.json --out v2_full
-"""
 
 import gc
 import json
