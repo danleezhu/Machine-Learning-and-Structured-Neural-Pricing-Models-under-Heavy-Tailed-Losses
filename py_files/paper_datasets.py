@@ -1,14 +1,14 @@
 """
-paper2_datasets.py — data-set settings used by every module of the pipeline: feature lists, split strata, balance
+paper_datasets.py — data-set settings used by every module of the pipeline: feature lists, split strata, balance
 segments, stressed-seed labels and the Tweedie power.
 
-    import paper2_datasets as dsm
+    import paper_datasets as dsm
     df, num_cols, cat_cols = dsm.prepare(df_freq, df_sev)
     train, valid, test = dsm.split(df, seed=41)
 
 freMTPL2  French MTPL, 678k policies (freMTPL2freq + freMTPL2sev). Preparation:
-          paper2_models.prepare_data (log Density for the models); split:
-          paper2_adjust_clean_plus.make_train_valid_test_stratified (60 / 20 / 20, strata: claim indicator x
+          paper_models.prepare_data (log Density for the models); split:
+          paper_adjust_clean_plus.make_train_valid_test_stratified (60 / 20 / 20, strata: claim indicator x
           claim-size class x Region).
 
 Every output directory records the data set and the Tweedie power in dataset.json; a directory written with another
@@ -74,7 +74,7 @@ def spec(name=None):
 def prepare(df_freq=None, df_sev=None):
     """Model-ready data of the active data set: (df, num_cols, cat_cols)."""
     if _ACTIVE == "freMTPL2":
-        import paper2_models as pm
+        import paper_models as pm
         return pm.prepare_data(df_freq, df_sev)
     raise KeyError(_ACTIVE)
 
@@ -83,7 +83,7 @@ def prepare_for_interactions(df_freq=None, df_sev=None):
     """Data used by the interaction diagnostics (raw Density; EBM bins on quantiles, so the FAST strengths do not
     depend on the log)."""
     if _ACTIVE == "freMTPL2":
-        import paper2_adjust_clean_plus as p2
+        import paper_adjust_clean_plus as p2
         return p2.prepare_fremtpl2(df_freq, df_sev)
     return prepare(df_freq, df_sev)
 
@@ -91,7 +91,7 @@ def prepare_for_interactions(df_freq=None, df_sev=None):
 def split(df, seed):
     """Train / valid / test (60 / 20 / 20) of the active data set for one seed."""
     if _ACTIVE == "freMTPL2":
-        import paper2_adjust_clean_plus as p2
+        import paper_adjust_clean_plus as p2
         return p2.make_train_valid_test_stratified(df, random_state=int(seed))
     raise KeyError(_ACTIVE)
 
@@ -139,7 +139,7 @@ def check_run_dir(out_dir, p=None):
         found = rec.get("dataset")
         if found != _ACTIVE:
             raise RuntimeError(f"{out_dir} holds results for {found!r}, the active data set is {_ACTIVE!r}; "
-                               f"call paper2_datasets.use({found!r}) or use another directory")
+                               f"call paper_datasets.use({found!r}) or use another directory")
         if "tweedie_power" in rec and abs(rec["tweedie_power"] - p) > 1e-12:
             raise RuntimeError(f"{out_dir} was run with p = {rec['tweedie_power']:g}, the current p is {p:g}; "
                                f"use another directory")
