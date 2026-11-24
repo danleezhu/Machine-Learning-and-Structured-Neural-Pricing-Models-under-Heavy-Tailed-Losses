@@ -1,5 +1,5 @@
 """
-paper2_adjust_clean_plus.py — shared helpers of the pipeline: data preparation, Tweedie deviance, stratified
+paper_adjust_clean_plus.py — shared helpers of the pipeline: data preparation, Tweedie deviance, stratified
 train / validation / test split, the two GLM benchmarks, tabular preprocessing for the networks, seeding.
 
 TWEEDIE_POWER = 1.6 is used to train every Tweedie model and to evaluate the Tweedie deviance (profile-likelihood
