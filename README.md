@@ -1,7 +1,6 @@
-# Machine-Learning and Structured Neural Pricing Models under Heavy-Tailed Losses
+# Structured Neural Networks for Actuarial Pricing: Predictive Performance, Calibration, and Stability Across Repeated Data Splits
 
-Code for the paper *Machine-Learning and Structured Neural Pricing Models under Heavy-Tailed Losses: Predictive
-Performance, Calibration, and Stability* (Danlei Zhu and Donglin Wang).
+Code for the paper *Structured Neural Networks for Actuarial Pricing: Predictive Performance, Calibration, and Stability Across Repeated Data Splits* (Danlei Zhu and Donglin Wang).
 
 Eight pure-premium models are tuned with one protocol and compared on 50 train/validation/test splits (60/20/20,
 seeds 41–90) of the French motor portfolio freMTPL2:
