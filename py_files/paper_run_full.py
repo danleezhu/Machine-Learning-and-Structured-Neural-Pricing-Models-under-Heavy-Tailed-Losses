@@ -10,16 +10,16 @@ import warnings
 import numpy as np
 import pandas as pd
 
-import paper2_adjust_clean_plus as p2
-import paper2_datasets as dsm
+import paper_adjust_clean_plus as p2
+import paper_datasets as dsm
 
 
 def check_dependencies():
     """Fails at import time (not hours into a run) if a helper module lacks a required function."""
-    problems = [f"paper2_adjust_clean_plus.py has no {f}" for f in ("tweedie_deviance", "set_all_seeds")
+    problems = [f"paper_adjust_clean_plus.py has no {f}" for f in ("tweedie_deviance", "set_all_seeds")
                 if not hasattr(p2, f)]
     if "seg_cols" not in dsm.spec():
-        problems.append("paper2_datasets.spec() has no 'seg_cols'")
+        problems.append("paper_datasets.spec() has no 'seg_cols'")
     if problems:
         raise ImportError("; ".join(problems) + ". Replace the file(s) and restart the kernel.")
 
@@ -258,7 +258,7 @@ def _append(rows, path, columns=None):
 
 def load_configs(configs_path):
     if configs_path is None or not os.path.exists(configs_path):
-        raise FileNotFoundError("configs_path is required (tuning/selected_configs.json from paper2_tuning.py)")
+        raise FileNotFoundError("configs_path is required (tuning/selected_configs.json from paper_tuning.py)")
     cfg = json.load(open(configs_path))
     missing = [m for m in CONFIGURED if m not in cfg]
     if missing:
@@ -278,7 +278,7 @@ def _check_configs(out_dir, configs):
 
 def run_full(df_freq, df_sev, seeds=range(41, 91), out_dir="v2_full", configs_path=None, model_names=None,
              power=None, n_perm=199, df_prepared=None, compute_pd=True, verbose=False):
-    import paper2_models as pm
+    import paper_models as pm
     power = dsm.power() if power is None else power
     configs = load_configs(configs_path)
     names = MODEL_ORDER if model_names is None else [m for m in MODEL_ORDER if m in model_names]
