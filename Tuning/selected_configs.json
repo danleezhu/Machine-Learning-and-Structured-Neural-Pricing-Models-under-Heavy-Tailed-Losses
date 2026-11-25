@@ -1,1 +1,123 @@
-
+{
+ "EBM": {
+  "learning_rate": 0.03,
+  "max_rounds": 500
+ },
+ "GBM": {
+  "num_leaves": 31,
+  "min_child_samples": 200,
+  "categorical": "ordinal"
+ },
+ "LocalGLMnet": {
+  "arch": {
+   "hidden_dims": [
+    128,
+    64
+   ],
+   "dropout": 0.05,
+   "eta_bound": 1.0,
+   "lambda_local": 0.0001
+  },
+  "train": {
+   "lr": 0.0003,
+   "batch_size": 4096,
+   "criterion": "ma",
+   "patience": 15,
+   "scheduler_patience": null,
+   "grad_clip": 5.0
+  }
+ },
+ "Neural GA2M": {
+  "arch": {
+   "hidden": [
+    64,
+    32
+   ],
+   "n_bag": 5
+  },
+  "train": {
+   "lr": 0.001,
+   "batch_size": 8192,
+   "criterion": "level",
+   "patience": 15,
+   "scheduler_patience": null,
+   "grad_clip": 5.0
+  }
+ },
+ "Tweedie-CANN": {
+  "arch": {
+   "hidden_dims": [
+    64,
+    32
+   ],
+   "dropout": 0.05,
+   "delta_bound": 1.0,
+   "lambda_delta": 0.001
+  },
+  "train": {
+   "lr": 0.0003,
+   "batch_size": 4096,
+   "criterion": "level",
+   "patience": 8,
+   "scheduler_patience": null,
+   "grad_clip": 5.0
+  }
+ },
+ "_meta": {
+  "data": "log(Density) for all models",
+  "selection_metric": "valid_dev_level",
+  "rule": "one-SE on paired differences, reference first",
+  "seeds_5": [
+   49,
+   50,
+   57,
+   62,
+   67
+  ],
+  "seeds_10": [
+   41,
+   47,
+   49,
+   50,
+   57,
+   62,
+   67,
+   74,
+   78,
+   85
+  ],
+  "tweedie_power": 1.6,
+  "train_constants": {
+   "max_epochs": 150,
+   "ma_window": 5,
+   "min_rel_delta": 1e-05,
+   "sched_factor": 0.5,
+   "min_lr": 1e-05,
+   "weight_decay": 1e-05,
+   "eval_batch": 65536
+  },
+  "gbm_constants": {
+   "learning_rate": 0.01,
+   "n_estimators": 5000,
+   "subsample": 0.9,
+   "subsample_freq": 1,
+   "colsample_bytree": 0.9,
+   "reg_alpha": 0.5,
+   "reg_lambda": 2.0,
+   "random_state": 42,
+   "stopping_rounds": 200
+  },
+  "ebm_constants": {
+   "interactions": 10,
+   "random_state": 42
+  },
+  "ebm_library_defaults": {
+   "learning_rate": 0.04,
+   "max_rounds": 50000,
+   "outer_bags": 14,
+   "validation_size": 0.15,
+   "early_stopping_rounds": 100
+  },
+  "written": "2026-10-30 04:40"
+ }
+}
