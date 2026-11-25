@@ -46,8 +46,8 @@ import numpy as np
 import pandas as pd
 import torch
 
-import paper2_adjust_clean_plus as p2
-import paper2_models as pm
+import paper_adjust_clean_plus as p2
+import paper_models as pm
 
 SEEDS_5 = [49, 50, 57, 62, 67]
 SEEDS_10 = [41, 47, 49, 50, 57, 62, 67, 74, 78, 85]
@@ -488,7 +488,7 @@ def run_tuning(df_freq, df_sev, out_dir="tuning", stages=ALL_STAGES, nn_models=t
 # =============================================================================================================
 def smoke_test(df_freq, df_sev, n_sample=60000, seed=49, out_dir="tuning_smoke"):
     import shutil
-    import paper2_run_full as rf
+    import paper_run_full as rf
     checks = {}
     df_raw, _, _ = p2.prepare_fremtpl2(df_freq, df_sev)
     df, num_cols, cat_cols = pm.prepare_data(df_freq, df_sev)
